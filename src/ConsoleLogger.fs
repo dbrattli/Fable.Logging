@@ -26,3 +26,4 @@ type ConsoleLogger() =
             Console.WriteLine(message)
 
         member this.IsEnabled(logLevel: LogLevel) = true
+        member this.BeginScope(var0) = failwith "Not implemented"

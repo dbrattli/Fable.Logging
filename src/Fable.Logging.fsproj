@@ -10,6 +10,7 @@
   <ItemGroup>
     <Compile Include="ILogger.fs" />
     <Compile Include="Common.fs" />
+    <Compile Include="LoggerFactory.fs" />
     <Compile Include="Fable.Structlog.fs" />
     <Compile Include="ConsoleLogger.fs" />
   </ItemGroup>

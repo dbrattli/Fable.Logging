@@ -31,6 +31,8 @@ type ILogger =
     abstract member Log: LogState -> unit
     abstract member IsEnabled: logLevel: LogLevel -> bool
 
+    abstract member BeginScope: obj -> ILogger
+
 type ILoggerProvider =
     inherit IDisposable
 

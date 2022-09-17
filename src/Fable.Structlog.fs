@@ -46,8 +46,8 @@ type ConsoleLogger() =
     let wrappedLogger = structLog.getLogger ()
 
     let processor (logger: WrappedLogger) (logMethod: string) (eventDict: EventDict) : EventDict =
-        let event = eventDict.["event"] :?> string
-        let args = eventDict.["args"] :?> obj[]
+        let event = eventDict["event"] :?> string
+        let args = eventDict["args"] :?> obj[]
 
         let format, parameters = Common.translateFormat event args
 
@@ -63,7 +63,7 @@ type ConsoleLogger() =
         member this.Log(state: LogState) =
             let message = state.Format
             let args = state.Args
-            let error = state.Exception
+            // let error = state.Exception
             let level = state.Level
 
             match level with
@@ -71,7 +71,14 @@ type ConsoleLogger() =
             | _ -> logger.Info(message, dict [ "args", args ])
 
         member this.IsEnabled(logLevel: LogLevel) = true
+        member this.BeginScope(var0) = failwith "Not implemented"
 
-module Test =
-    let logger = ConsoleLogger()
-    logger.LogDebug("Hello {name}", "World")
+
+type ConsoleLoggerProvider() =
+    interface ILoggerProvider with
+        member this.CreateLogger(name) = new ConsoleLogger()
+        member this.Dispose() = ()
+
+// module Test =
+//     let logger = ConsoleLogger()
+//     logger.LogDebug("Hello {name}", "World")
