@@ -40,6 +40,7 @@ type LoggerFactory(providers: ILoggerProvider seq) =
                 provider.Dispose()
 
     member x.CreateLogger name = (x :> ILoggerFactory).CreateLogger name
+    member x.AddProvider provider = (x :> ILoggerFactory).AddProvider provider
 
 [<AutoOpen>]
 module LoggerFactoryExtensions =
