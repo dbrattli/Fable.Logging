@@ -2,6 +2,7 @@ module Fable.Logging.Structlog
 
 open System
 open System.Collections.Generic
+
 open Fable.Core
 
 
@@ -9,16 +10,22 @@ open Fable.Core
 type FilteringBoundLogger =
     [<Emit("$0.debug($1, **$2)")>]
     abstract Debug: event: string * kw: IDictionary<string, obj> -> unit
+
     [<Emit("$0.info($1, **$2)")>]
     abstract Info: event: string * kw: IDictionary<string, obj> -> unit
+
     [<Emit("$0.warning($1, **$2)")>]
     abstract Warning: event: string * kw: IDictionary<string, obj> -> unit
+
     [<Emit("$0.error($1, **$2)")>]
     abstract Error: event: string * kw: IDictionary<string, obj> -> unit
+
     [<Emit("$0.fatal($1, **$2)")>]
     abstract Fatal: event: string * kw: IDictionary<string, obj> -> unit
+
     [<Emit("$0.exception($1, **$2)")>]
     abstract Exception: exn * kw: IDictionary<string, obj> -> unit
+
     [<Emit("$0.critical($1, **$2)")>]
     abstract Critical: event: string * kw: IDictionary<string, obj> -> unit
 
@@ -34,7 +41,7 @@ type StructLog =
 [<ImportAll("structlog")>]
 let structLog: StructLog = nativeOnly
 
-type ConsoleLogger () =
+type ConsoleLogger() =
 
     let wrappedLogger = structLog.getLogger ()
 
@@ -45,11 +52,12 @@ type ConsoleLogger () =
         let format, parameters = Common.translateFormat event args
 
         // printfn "string.format %A" (format, args)
-        let event  = String.Format(format, args=args)
+        let event = String.Format(format, args = args)
         parameters["event"] <- event
         parameters
 
-    let logger  = structLog.wrapLogger(wrappedLogger, [Processor(processor)] |> ResizeArray)
+    let logger =
+        structLog.wrapLogger (wrappedLogger, [ Processor(processor) ] |> ResizeArray)
 
     interface ILogger with
         member this.Log(state: LogState) =
@@ -59,8 +67,9 @@ type ConsoleLogger () =
             let level = state.Level
 
             match level with
-            | LogLevel.Debug -> logger.Debug(message, dict ["args", args])
-            | _ -> logger.Info(message, dict ["args", args])
+            | LogLevel.Debug -> logger.Debug(message, dict [ "args", args ])
+            | _ -> logger.Info(message, dict [ "args", args ])
+
         member this.IsEnabled(logLevel: LogLevel) = true
 
 module Test =

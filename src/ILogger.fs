@@ -1,8 +1,6 @@
 namespace Fable.Logging
 
 open System
-open Fable.Core
-open Fable.Core.PyInterop
 
 
 type LogLevel =

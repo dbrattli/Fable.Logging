@@ -12,7 +12,8 @@ module Common =
     let translateFormat (format: string) (args: obj array) =
         let parameters = Dictionary<string, obj>()
         let mutable index = -1
-        let replacement(m: Match) =
+
+        let replacement (m: Match) =
             index <- index + 1
             parameters[m.Groups.[1].Value] <- args.[index]
             "{" + index.ToString() + "}"
