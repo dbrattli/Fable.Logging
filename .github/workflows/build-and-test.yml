@@ -24,17 +24,14 @@ jobs:
       - name: Setup dotnet tools
         run: dotnet tool restore
 
-      - name: Install src dependencies
-        run: dotnet restore src
+      - name: Install dependencies
+        run: dotnet restore
 
       # - name: Install test dependencies
       #   run: dotnet restore test
 
       # - name: Install pytest runner
       #   run: pip install pytest
-
-      - name: Install build dependencies
-        run: dotnet restore Build.fsproj
 
       #- name: Check formatting
       #  run: dotnet fantomas . -r --check
