@@ -24,7 +24,7 @@ type FilteringBoundLogger =
     abstract Fatal: event: string * kw: IDictionary<string, obj> -> unit
 
     [<Emit("$0.exception($1, **$2)")>]
-    abstract Exception: exn * kw: IDictionary<string, obj> -> unit
+    abstract Exception: event: string * kw: IDictionary<string, obj> -> unit
 
     [<Emit("$0.critical($1, **$2)")>]
     abstract Critical: event: string * kw: IDictionary<string, obj> -> unit
@@ -63,14 +63,17 @@ type ConsoleLogger() =
         member this.Log(state: LogState) =
             let message = state.Format
             let args = state.Args
-            // let error = state.Exception
+            let error = state.Exception
             let level = state.Level
 
             match level with
             | LogLevel.Debug -> logger.Debug(message, dict [ "args", args ])
             | LogLevel.Information -> logger.Info(message, dict [ "args", args ])
             | LogLevel.Warning -> logger.Warning(message, dict [ "args", args ])
-            | LogLevel.Error -> logger.Error(message, dict [ "args", args ])
+            | LogLevel.Error ->
+                match error with
+                | Some ex -> logger.Exception(message, dict [ "args", args ])
+                | None -> logger.Error(message, dict [ "args", args ])
             | LogLevel.Critical -> logger.Critical(message, dict [ "args", args ])
             | _ -> logger.Info(message, dict [ "args", args ])
 
@@ -82,7 +85,3 @@ type ConsoleLoggerProvider() =
     interface ILoggerProvider with
         member this.CreateLogger(name) = new ConsoleLogger()
         member this.Dispose() = ()
-
-// module Test =
-//     let logger = ConsoleLogger()
-//     logger.LogDebug("Hello {name}", "World")

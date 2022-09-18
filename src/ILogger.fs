@@ -68,6 +68,10 @@ module Extensions =
             if this.IsEnabled LogLevel.Error then
                 LogState.Create(LogLevel.Error, message, parameters) |> this.Log
 
+        member this.LogError(message: string, error: Exception, [<ParamArray>] parameters: obj[]) =
+            if this.IsEnabled LogLevel.Error then
+                LogState.Create(LogLevel.Error, message, parameters, error) |> this.Log
+
         member this.LogWarning(message: string, [<ParamArray>] parameters: obj[]) =
             if this.IsEnabled LogLevel.Warning then
                 LogState.Create(LogLevel.Warning, message, parameters) |> this.Log

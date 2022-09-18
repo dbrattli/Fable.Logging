@@ -23,7 +23,7 @@ type Logger(name: string, providers: ILoggerProvider seq) =
 type LoggerFactory(providers: ILoggerProvider seq) =
     let providers = ResizeArray<ILoggerProvider>(providers)
 
-    new () = new LoggerFactory(Seq.empty)
+    new() = new LoggerFactory(Seq.empty)
 
     interface ILoggerFactory with
         member this.CreateLogger name =
@@ -40,7 +40,9 @@ type LoggerFactory(providers: ILoggerProvider seq) =
                 provider.Dispose()
 
     member x.CreateLogger name = (x :> ILoggerFactory).CreateLogger name
-    member x.AddProvider provider = (x :> ILoggerFactory).AddProvider provider
+
+    member x.AddProvider provider =
+        (x :> ILoggerFactory).AddProvider provider
 
 [<AutoOpen>]
 module LoggerFactoryExtensions =
