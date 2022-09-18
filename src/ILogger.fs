@@ -52,7 +52,7 @@ module Extensions =
             if this.IsEnabled logLevel then
                 LogState.Create(logLevel, message) |> this.Log
 
-        member this.Log(logLevel: LogLevel, message: string, parameters: obj[]) =
+        member this.Log(logLevel: LogLevel, message: string, [<ParamArray>] parameters: obj[]) =
             if this.IsEnabled logLevel then
                 LogState.Create(logLevel, message, parameters) |> this.Log
 
@@ -75,3 +75,7 @@ module Extensions =
         member this.LogInformation(message: string, [<ParamArray>] parameters: obj[]) =
             if this.IsEnabled LogLevel.Information then
                 LogState.Create(LogLevel.Information, message, parameters) |> this.Log
+
+        member this.LogCritical(message: string, [<ParamArray>] parameters: obj[]) =
+            if this.IsEnabled LogLevel.Critical then
+                LogState.Create(LogLevel.Critical, message, parameters) |> this.Log
