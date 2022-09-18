@@ -68,6 +68,10 @@ type ConsoleLogger() =
 
             match level with
             | LogLevel.Debug -> logger.Debug(message, dict [ "args", args ])
+            | LogLevel.Information -> logger.Info(message, dict [ "args", args ])
+            | LogLevel.Warning -> logger.Warning(message, dict [ "args", args ])
+            | LogLevel.Error -> logger.Error(message, dict [ "args", args ])
+            | LogLevel.Critical -> logger.Critical(message, dict [ "args", args ])
             | _ -> logger.Info(message, dict [ "args", args ])
 
         member this.IsEnabled(logLevel: LogLevel) = true
