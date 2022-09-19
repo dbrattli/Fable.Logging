@@ -64,6 +64,7 @@ type ConsoleLogger() =
     interface ILogger with
         member x.Log(state: LogState) =
             let level = state.Level
+
             if level >= x.MinimumLevel then
                 let message = state.Format
                 let args = state.Args

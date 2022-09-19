@@ -3,7 +3,10 @@ namespace Fable.Logging
 open Fable.Core
 
 type internal Logger(name: string, providers: ResizeArray<ILoggerProvider>, minimumLevel: LogLevel) =
-    let loggers = providers |> Seq.map (fun p -> p.CreateLogger(name)) |> ResizeArray
+    let loggers =
+        providers
+        |> Seq.map (fun p -> p.CreateLogger(name))
+        |> ResizeArray
 
     member x.AddProviders(provider: ILoggerProvider) =
         loggers.Add(provider.CreateLogger(name))
@@ -11,10 +14,12 @@ type internal Logger(name: string, providers: ResizeArray<ILoggerProvider>, mini
     interface ILogger with
         member _.Log(state: LogState) =
             if state.Level >= minimumLevel then
-                loggers |> Seq.iter (fun l -> l.Log state)
+                loggers
+                |> Seq.iter (fun l -> l.Log state)
 
         member x.IsEnabled(logLevel: LogLevel) =
-            loggers |> Seq.exists (fun l -> l.IsEnabled logLevel)
+            loggers
+            |> Seq.exists (fun l -> l.IsEnabled logLevel)
 
         member _.BeginScope(state: obj) = failwith "Not implemented"
 
@@ -40,6 +45,7 @@ type LoggerFactory(providers: ILoggerProvider seq) =
         member this.AddProvider(provider) =
             for logger in loggers do
                 logger.AddProviders(provider)
+
             providers.Add(provider)
 
         member this.Dispose() =
@@ -49,8 +55,7 @@ type LoggerFactory(providers: ILoggerProvider seq) =
             providers.Clear()
 
     interface ILoggingBuilder with
-        member x.AddProvider(provider: ILoggerProvider) =
-            providers.Add(provider)
+        member x.AddProvider(provider: ILoggerProvider) = providers.Add(provider)
 
         member x.ClearProviders() =
             for provider in providers do
@@ -58,17 +63,17 @@ type LoggerFactory(providers: ILoggerProvider seq) =
 
             providers.Clear()
 
-        member x.SetMinimumLevel(logLevel: LogLevel) =
-            minimumLevel <- logLevel
+        member x.SetMinimumLevel(logLevel: LogLevel) = minimumLevel <- logLevel
 
-    member x.CreateLogger name = (x :> ILoggerFactory).CreateLogger(name)
+    member x.CreateLogger name =
+        (x :> ILoggerFactory).CreateLogger(name)
 
     member x.AddProvider provider =
         (x :> ILoggerFactory).AddProvider(provider)
 
     static member Create() = new LoggerFactory()
 
-    static member Create (configure: ILoggingBuilder -> unit) : LoggerFactory =
+    static member Create(configure: ILoggingBuilder -> unit) : LoggerFactory =
         let factory = new LoggerFactory()
         configure (factory :> ILoggingBuilder)
         factory
