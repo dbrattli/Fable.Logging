@@ -2,6 +2,7 @@ namespace Fable.Logging
 
 open System
 
+open Fable.Core
 
 type LogLevel =
     | Critical = 5
@@ -38,6 +39,7 @@ type ILoggerProvider =
 
     abstract member CreateLogger: name: string -> ILogger
 
+[<Mangle>]
 type ILoggerFactory =
     inherit IDisposable
 
