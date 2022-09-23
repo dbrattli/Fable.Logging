@@ -50,6 +50,9 @@ type ILoggerFactory =
 module Extensions =
     type ILogger with
 
+        member inline this.Log<'T>(level: LogLevel, format: string, ?parameters: obj array, ?error: exn) =
+            this.Log(LogState.Create(level, format, ?parameters = parameters, ?error = error))
+
         member this.Log(logLevel: LogLevel, message: string) =
             if this.IsEnabled logLevel then
                 LogState.Create(logLevel, message)

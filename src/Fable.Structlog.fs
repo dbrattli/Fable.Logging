@@ -41,23 +41,26 @@ type StructLog =
 [<ImportAll("structlog")>]
 let structLog: StructLog = nativeOnly
 
-type ConsoleLogger() =
+type Logger(processors: Processor list) =
 
     let wrappedLogger = structLog.getLogger ()
 
+    // processor that combines args with the placeholders in the format
+    // string to generate parameters to be used with structlog
     let processor (logger: WrappedLogger) (logMethod: string) (eventDict: EventDict) : EventDict =
         let event = eventDict["event"] :?> string
         let args = eventDict["args"] :?> obj[]
 
         let format, parameters = Common.translateFormat event args
 
-        // printfn "string.format %A" (format, args)
         let event = String.Format(format, args = args)
         parameters["event"] <- event
         parameters
 
     let logger =
-        structLog.wrapLogger (wrappedLogger, [ Processor(processor) ] |> ResizeArray)
+        structLog.wrapLogger (wrappedLogger, Processor(processor) :: processors |> ResizeArray)
+
+    new() = Logger([])
 
     member val MinimumLevel = LogLevel.Trace with get, set
 
@@ -81,11 +84,26 @@ type ConsoleLogger() =
                 | LogLevel.Critical -> logger.Critical(message, dict [ "args", args ])
                 | _ -> logger.Info(message, dict [ "args", args ])
 
-        member x.IsEnabled(logLevel: LogLevel) = true
+        member x.IsEnabled(logLevel: LogLevel) = logLevel >= x.MinimumLevel
         member x.BeginScope(var0) = failwith "Not implemented"
+
+
+type ConsoleLogger() =
+    inherit Logger()
+
+[<Import("JsonRenderer", "structlog.processors")>]
+let JsonRenderer: unit -> Processor = nativeOnly
+
+type JsonLogger() =
+    inherit Logger([ JsonRenderer() ])
 
 
 type ConsoleLoggerProvider() =
     interface ILoggerProvider with
         member this.CreateLogger(name) = new ConsoleLogger()
+        member this.Dispose() = ()
+
+type JsonLoggerProvider() =
+    interface ILoggerProvider with
+        member this.CreateLogger(name) = new JsonLogger()
         member this.Dispose() = ()
