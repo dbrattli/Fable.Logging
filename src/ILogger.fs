@@ -2,6 +2,7 @@ namespace Fable.Logging
 
 open System
 
+open Fable.Core
 
 type LogLevel =
     | Critical = 5
@@ -38,6 +39,7 @@ type ILoggerProvider =
 
     abstract member CreateLogger: name: string -> ILogger
 
+[<Mangle>]
 type ILoggerFactory =
     inherit IDisposable
 
@@ -53,36 +55,45 @@ module Extensions =
 
         member this.Log(logLevel: LogLevel, message: string) =
             if this.IsEnabled logLevel then
-                LogState.Create(logLevel, message) |> this.Log
+                LogState.Create(logLevel, message)
+                |> this.Log
 
         member this.Log(logLevel: LogLevel, message: string, [<ParamArray>] parameters: obj[]) =
             if this.IsEnabled logLevel then
-                LogState.Create(logLevel, message, parameters) |> this.Log
+                LogState.Create(logLevel, message, parameters)
+                |> this.Log
 
         member this.Log(logLevel: LogLevel, error: exn, message: string) =
             if this.IsEnabled logLevel then
-                LogState.Create(logLevel, message, error = error) |> this.Log
+                LogState.Create(logLevel, message, error = error)
+                |> this.Log
 
         member this.LogDebug(message: string, [<ParamArray>] parameters: obj[]) =
             if this.IsEnabled LogLevel.Debug then
-                LogState.Create(LogLevel.Debug, message, parameters) |> this.Log
+                LogState.Create(LogLevel.Debug, message, parameters)
+                |> this.Log
 
         member this.LogError(message: string, [<ParamArray>] parameters: obj[]) =
             if this.IsEnabled LogLevel.Error then
-                LogState.Create(LogLevel.Error, message, parameters) |> this.Log
+                LogState.Create(LogLevel.Error, message, parameters)
+                |> this.Log
 
         member this.LogError(message: string, error: Exception, [<ParamArray>] parameters: obj[]) =
             if this.IsEnabled LogLevel.Error then
-                LogState.Create(LogLevel.Error, message, parameters, error) |> this.Log
+                LogState.Create(LogLevel.Error, message, parameters, error)
+                |> this.Log
 
         member this.LogWarning(message: string, [<ParamArray>] parameters: obj[]) =
             if this.IsEnabled LogLevel.Warning then
-                LogState.Create(LogLevel.Warning, message, parameters) |> this.Log
+                LogState.Create(LogLevel.Warning, message, parameters)
+                |> this.Log
 
         member this.LogInformation(message: string, [<ParamArray>] parameters: obj[]) =
             if this.IsEnabled LogLevel.Information then
-                LogState.Create(LogLevel.Information, message, parameters) |> this.Log
+                LogState.Create(LogLevel.Information, message, parameters)
+                |> this.Log
 
         member this.LogCritical(message: string, [<ParamArray>] parameters: obj[]) =
             if this.IsEnabled LogLevel.Critical then
-                LogState.Create(LogLevel.Critical, message, parameters) |> this.Log
+                LogState.Create(LogLevel.Critical, message, parameters)
+                |> this.Log

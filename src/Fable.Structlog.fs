@@ -62,26 +62,30 @@ type Logger(processors: Processor list) =
 
     new() = Logger([])
 
+    member val MinimumLevel = LogLevel.Trace with get, set
+
     interface ILogger with
-        member this.Log(state: LogState) =
-            let message = state.Format
-            let args = state.Args
-            let error = state.Exception
+        member x.Log(state: LogState) =
             let level = state.Level
 
-            match level with
-            | LogLevel.Debug -> logger.Debug(message, dict [ "args", args ])
-            | LogLevel.Information -> logger.Info(message, dict [ "args", args ])
-            | LogLevel.Warning -> logger.Warning(message, dict [ "args", args ])
-            | LogLevel.Error ->
-                match error with
-                | Some ex -> logger.Exception(message, dict [ "args", args ])
-                | None -> logger.Error(message, dict [ "args", args ])
-            | LogLevel.Critical -> logger.Critical(message, dict [ "args", args ])
-            | _ -> logger.Info(message, dict [ "args", args ])
+            if level >= x.MinimumLevel then
+                let message = state.Format
+                let args = state.Args
+                let error = state.Exception
 
-        member this.IsEnabled(logLevel: LogLevel) = true
-        member this.BeginScope(var0) = failwith "Not implemented"
+                match level with
+                | LogLevel.Debug -> logger.Debug(message, dict [ "args", args ])
+                | LogLevel.Information -> logger.Info(message, dict [ "args", args ])
+                | LogLevel.Warning -> logger.Warning(message, dict [ "args", args ])
+                | LogLevel.Error ->
+                    match error with
+                    | Some ex -> logger.Exception(message, dict [ "args", args ])
+                    | None -> logger.Error(message, dict [ "args", args ])
+                | LogLevel.Critical -> logger.Critical(message, dict [ "args", args ])
+                | _ -> logger.Info(message, dict [ "args", args ])
+
+        member x.IsEnabled(logLevel: LogLevel) = logLevel >= x.MinimumLevel
+        member x.BeginScope(var0) = failwith "Not implemented"
 
 
 type ConsoleLogger() =

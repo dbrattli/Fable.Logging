@@ -20,7 +20,10 @@ type ConsoleLogger() =
                 let message, _ = Common.translateFormat message args
 
                 match error with
-                | Some error -> message + Environment.NewLine + error.ToString()
+                | Some error ->
+                    message
+                    + Environment.NewLine
+                    + error.ToString()
                 | _ -> message
 
             Console.WriteLine(message)
