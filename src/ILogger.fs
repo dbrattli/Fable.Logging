@@ -46,12 +46,11 @@ type ILoggerFactory =
     abstract member CreateLogger: name: string -> ILogger
     abstract member AddProvider: provider: ILoggerProvider -> unit
 
+
 [<AutoOpen>]
 module Extensions =
-    type ILogger with
 
-        member inline this.Log<'T>(level: LogLevel, format: string, ?parameters: obj array, ?error: exn) =
-            this.Log(LogState.Create(level, format, ?parameters = parameters, ?error = error))
+    type ILogger with
 
         member this.Log(logLevel: LogLevel, message: string) =
             if this.IsEnabled logLevel then

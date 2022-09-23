@@ -9,7 +9,7 @@ module Common =
     let pattern = Regex(@"\{([a-zA-Z_]+\d|[a-zA-Z_]*?)\}")
 
     // Translate format string from named placeholders to string format with indexed placeholders
-    let translateFormat (format: string) (args: obj array) =
+    let translateFormat (categoryName: string) (format: string) (args: obj array) =
         let parameters = Dictionary<string, obj>()
         let mutable index = -1
 
@@ -19,4 +19,15 @@ module Common =
             "{" + index.ToString() + "}"
 
         let format = pattern.Replace(format, replacement)
-        format, parameters
+
+        let event =
+            let format = String.Format(format, args = args)
+
+            if categoryName.Length > 0 then
+                categoryName + " - " + format
+            else
+                format
+
+        parameters["event"] <- event
+        parameters["category_name"] <- categoryName
+        event, parameters

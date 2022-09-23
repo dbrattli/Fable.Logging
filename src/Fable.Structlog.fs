@@ -8,6 +8,9 @@ open Fable.Core
 
 [<Import("FilteringBoundLogger", "structlog.types")>]
 type FilteringBoundLogger =
+    [<Emit("$0.bind(**($1 or {}))")>]
+    abstract Bind: ?newValues: IDictionary<string, obj> -> FilteringBoundLogger
+
     [<Emit("$0.debug($1, **$2)")>]
     abstract Debug: event: string * kw: IDictionary<string, obj> -> unit
 
@@ -41,26 +44,27 @@ type StructLog =
 [<ImportAll("structlog")>]
 let structLog: StructLog = nativeOnly
 
-type Logger(processors: Processor list) =
+type Logger(name: string, processors: Processor list) =
 
-    let wrappedLogger = structLog.getLogger ()
+    let wrappedLogger = structLog.getLogger().Bind()
 
     // processor that combines args with the placeholders in the format
     // string to generate parameters to be used with structlog
-    let processor (logger: WrappedLogger) (logMethod: string) (eventDict: EventDict) : EventDict =
+    let processor (_: WrappedLogger) (_: string) (eventDict: EventDict) : EventDict =
         let event = eventDict["event"] :?> string
         let args = eventDict["args"] :?> obj[]
 
-        let format, parameters = Common.translateFormat event args
-
-        let event = String.Format(format, args = args)
-        parameters["event"] <- event
+        let _, parameters = Common.translateFormat name event args
         parameters
 
     let logger =
-        structLog.wrapLogger (wrappedLogger, Processor(processor) :: processors |> ResizeArray)
+        structLog.wrapLogger (
+            wrappedLogger,
+            Processor(processor) :: processors
+            |> ResizeArray
+        )
 
-    new() = Logger([])
+    new(name: string) = Logger(name, [])
 
     member val MinimumLevel = LogLevel.Trace with get, set
 
@@ -88,22 +92,22 @@ type Logger(processors: Processor list) =
         member x.BeginScope(var0) = failwith "Not implemented"
 
 
-type ConsoleLogger() =
-    inherit Logger()
+type ConsoleLogger(name) =
+    inherit Logger(name, [])
 
-[<Import("JsonRenderer", "structlog.processors")>]
-let JsonRenderer: unit -> Processor = nativeOnly
+[<Import("JSONRenderer", "structlog.processors")>]
+let JSONRenderer: unit -> Processor = nativeOnly
 
-type JsonLogger() =
-    inherit Logger([ JsonRenderer() ])
+type JsonLogger(name) =
+    inherit Logger(name = name, processors = [ JSONRenderer() ])
 
 
 type ConsoleLoggerProvider() =
     interface ILoggerProvider with
-        member this.CreateLogger(name) = new ConsoleLogger()
+        member this.CreateLogger(name) = ConsoleLogger(name)
         member this.Dispose() = ()
 
 type JsonLoggerProvider() =
     interface ILoggerProvider with
-        member this.CreateLogger(name) = new JsonLogger()
+        member this.CreateLogger(name) = JsonLogger(name)
         member this.Dispose() = ()

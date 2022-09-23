@@ -77,17 +77,3 @@ type LoggerFactory(providers: ILoggerProvider seq) =
         let factory = new LoggerFactory()
         configure (factory :> ILoggingBuilder)
         factory
-
-[<AutoOpen>]
-module LoggerFactoryExtensions =
-    type LoggerFactory with
-
-        member inline this.CreateLogger<'T>() =
-            let name = nameof<'T>
-            (this :> ILoggerFactory).CreateLogger name
-
-    type ILoggerFactory with
-
-        member inline this.CreateLogger<'T>() =
-            let name = nameof<'T>
-            this.CreateLogger name

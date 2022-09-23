@@ -2,7 +2,7 @@ namespace Fable.Logging
 
 open System
 
-type ConsoleLogger() =
+type ConsoleLogger(name: string) =
     interface ILogger with
         member this.Log(state: LogState) =
             let message = state.Format
@@ -17,7 +17,7 @@ type ConsoleLogger() =
                 | _ -> String.Format(message, args)
 
             let message =
-                let message, _ = Common.translateFormat message args
+                let message, _ = Common.translateFormat name message args
 
                 match error with
                 | Some error ->
