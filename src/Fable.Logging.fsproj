@@ -6,6 +6,7 @@
     <WarnOn>3390;$(WarnOn)</WarnOn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageTags>fsharp;fable;fable-library;fable-python</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ILogger.fs" />
