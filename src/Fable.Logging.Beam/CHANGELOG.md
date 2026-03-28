@@ -7,7 +7,7 @@ name: Fable.Logging.Beam
 
 All notable changes to this project will be documented in this file.
 
-## 0.10.0 - 2026-03-28
+## 0.11.0 - 2026-03-28
 
 ### 🚀 Features
 
