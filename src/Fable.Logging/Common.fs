@@ -1,32 +1,46 @@
 namespace Fable.Logging
 
-open System
 open System.Collections.Generic
-open System.Text.RegularExpressions
 
 module Common =
-    /// Pattern to match a log-format string with named placeholders
-    let pattern = Regex(@"\{([a-zA-Z_]+\d|[a-zA-Z_]*?)\}")
-
-    // Translate format string from named placeholders to string format with indexed placeholders
+    // Translate format string from named placeholders to final string.
+    // Scans left-to-right for {Name} placeholders, replaces each with the
+    // corresponding arg by index. Uses simple string ops instead of
+    // Regex/String.Format for BEAM compatibility.
     let translateFormat (categoryName: string) (format: string) (args: obj array) =
         let parameters = Dictionary<string, obj>()
-        let mutable index = -1
+        let result = System.Text.StringBuilder()
+        let mutable i = 0
+        let mutable argIndex = 0
 
-        let replacement (m: Match) =
-            index <- index + 1
-            parameters[m.Groups.[1].Value] <- args.[index]
-            "{" + index.ToString() + "}"
+        while i < format.Length do
+            if format.[i] = '{' then
+                let closeIdx = format.IndexOf('}', i + 1)
 
-        let format = pattern.Replace(format, replacement)
+                if
+                    closeIdx > i + 1
+                    && argIndex < args.Length
+                then
+                    let name = format.Substring(i + 1, closeIdx - i - 1)
+                    let value = args.[argIndex]
+                    parameters[name] <- value
+                    result.Append(string value) |> ignore
+                    argIndex <- argIndex + 1
+                    i <- closeIdx + 1
+                else
+                    result.Append(format.[i]) |> ignore
+                    i <- i + 1
+            else
+                result.Append(format.[i]) |> ignore
+                i <- i + 1
+
+        let formatted = result.ToString()
 
         let event =
-            let format = String.Format(format, args = args)
-
             if categoryName.Length > 0 then
-                categoryName + " - " + format
+                categoryName + " - " + formatted
             else
-                format
+                formatted
 
         parameters["event"] <- event
         parameters["category_name"] <- categoryName
