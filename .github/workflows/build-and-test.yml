@@ -11,38 +11,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
+      - uses: actions/checkout@v6
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 6.0.401
+          dotnet-version: 10.x
 
-      - name: Setup dotnet tools
-        run: dotnet tool restore
+      - name: Install just
+        uses: extractions/setup-just@v3
 
-      - name: Install dependencies
-        run: dotnet restore
-
-      # - name: Install test dependencies
-      #   run: dotnet restore test
-
-      # - name: Install pytest runner
-      #   run: pip install pytest
+      - name: Restore dependencies
+        run: |
+          just setup
+          just restore
 
       #- name: Check formatting
-      #  run: dotnet fantomas . -r --check
+      #  run: just format-check
 
       - name: Build
-        run: dotnet fable src --lang Python
-
-      - name: Install dependencies
-        run: |
-          pip install poetry
-          poetry install
-
-      # - name: Test
-      #   run: dotnet run Test
+        run: just build

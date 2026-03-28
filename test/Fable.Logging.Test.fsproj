@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <GenerateProgramFile>false</GenerateProgramFile>
+    <DisableImplicitFSharpCoreReference>true</DisableImplicitFSharpCoreReference>
+    <LangVersion>preview</LangVersion>
+    <OutputType>Exe</OutputType>
+    <NoWarn>NU1510</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../src/Fable.Logging/Fable.Logging.fsproj" />
+    <ProjectReference Include="../src/Fable.Logging.Structlog/Fable.Logging.Structlog.fsproj" />
+    <ProjectReference Include="../src/Fable.Logging.Beam/Fable.Logging.Beam.fsproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="TestUtils.fs" />
+    <Compile Include="TestCommon.fs" />
+    <Compile Include="TestConsoleLogger.fs" />
+    <Compile Include="TestLoggerFactory.fs" />
+    <Compile Include="TestLogLevel.fs" />
+    <Compile Include="TestExtensions.fs" />
+    <Compile Include="TestStructlog.fs" />
+    <Compile Include="TestBeamLogger.fs" />
+    <Compile Include="TestJSLogger.fs" />
+    <Compile Include="Main.fs" />
+  </ItemGroup>
+  <Import Project="..\.paket\Paket.Restore.targets" />
+</Project>

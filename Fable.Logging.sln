@@ -1,9 +1,15 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fable.Logging", "src\Fable.Logging.fsproj", "{1E89C756-0508-4863-B3B3-5DFF1A11F4C6}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fable.Logging", "src\Fable.Logging\Fable.Logging.fsproj", "{1E89C756-0508-4863-B3B3-5DFF1A11F4C6}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fable.Logging.Structlog", "src\Fable.Logging.Structlog\Fable.Logging.Structlog.fsproj", "{2F9AC756-0608-4963-C3C3-6EFF2A22F5D7}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fable.Logging.Beam", "src\Fable.Logging.Beam\Fable.Logging.Beam.fsproj", "{3A0BC856-0708-5A63-D3D3-7FFF3B33F6E8}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fable.Logging.Test", "test\Fable.Logging.Test.fsproj", "{5C2DE056-0908-7C63-F3F3-9FFF5D55F8FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +24,17 @@ Global
 		{1E89C756-0508-4863-B3B3-5DFF1A11F4C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E89C756-0508-4863-B3B3-5DFF1A11F4C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E89C756-0508-4863-B3B3-5DFF1A11F4C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F9AC756-0608-4963-C3C3-6EFF2A22F5D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F9AC756-0608-4963-C3C3-6EFF2A22F5D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F9AC756-0608-4963-C3C3-6EFF2A22F5D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F9AC756-0608-4963-C3C3-6EFF2A22F5D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A0BC856-0708-5A63-D3D3-7FFF3B33F6E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A0BC856-0708-5A63-D3D3-7FFF3B33F6E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A0BC856-0708-5A63-D3D3-7FFF3B33F6E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A0BC856-0708-5A63-D3D3-7FFF3B33F6E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C2DE056-0908-7C63-F3F3-9FFF5D55F8FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C2DE056-0908-7C63-F3F3-9FFF5D55F8FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C2DE056-0908-7C63-F3F3-9FFF5D55F8FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C2DE056-0908-7C63-F3F3-9FFF5D55F8FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

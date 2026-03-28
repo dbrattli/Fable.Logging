@@ -132,3 +132,9 @@ dmypy.json
 obj/
 bin/
 .idea/
+.fable/
+nupkgs/
+
+# Paket
+.paket/
+paket-files/

@@ -2,17 +2,33 @@
   "version": 1,
   "isRoot": true,
   "tools": {
-    "fantomas": {
-      "version": "5.0.2",
+    "paket": {
+      "version": "10.3.1",
       "commands": [
-        "fantomas"
-      ]
+        "paket"
+      ],
+      "rollForward": false
     },
     "fable": {
-      "version": "4.0.0-theta-008",
+      "version": "5.0.0-rc.3",
       "commands": [
         "fable"
-      ]
+      ],
+      "rollForward": false
+    },
+    "fantomas": {
+      "version": "7.0.5",
+      "commands": [
+        "fantomas"
+      ],
+      "rollForward": false
+    },
+    "easybuild.shipit": {
+      "version": "2.0.0",
+      "commands": [
+        "shipit"
+      ],
+      "rollForward": false
     }
   }
 }

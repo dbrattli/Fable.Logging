@@ -1,0 +1,69 @@
+# Fable.Logging build commands
+# Install just: https://github.com/casey/just
+
+set dotenv-load
+
+src_path := "src"
+
+# Default recipe - show available commands
+default:
+    @just --list
+
+# Clean build output
+clean:
+    rm -rf {{src_path}}/Fable.Logging/obj {{src_path}}/Fable.Logging/bin
+    rm -rf {{src_path}}/Fable.Logging.Structlog/obj {{src_path}}/Fable.Logging.Structlog/bin
+    rm -rf {{src_path}}/Fable.Logging.Beam/obj {{src_path}}/Fable.Logging.Beam/bin
+    rm -rf .fable
+
+# Build all projects
+build:
+    dotnet build {{src_path}}/Fable.Logging
+    dotnet build {{src_path}}/Fable.Logging.Structlog
+    dotnet build {{src_path}}/Fable.Logging.Beam
+    dotnet build test
+
+# Create NuGet packages with versions from changelogs
+pack:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    get_version() { grep -m1 '^## ' "$1" | sed 's/^## \([^ ]*\).*/\1/'; }
+    LOGGING_VERSION=$(get_version src/Fable.Logging/CHANGELOG.md)
+    STRUCTLOG_VERSION=$(get_version src/Fable.Logging.Structlog/CHANGELOG.md)
+    BEAM_VERSION=$(get_version src/Fable.Logging.Beam/CHANGELOG.md)
+    dotnet pack src/Fable.Logging -c Release -o ./nupkgs -p:PackageVersion=$LOGGING_VERSION -p:InformationalVersion=$LOGGING_VERSION
+    dotnet pack src/Fable.Logging.Structlog -c Release -o ./nupkgs -p:PackageVersion=$STRUCTLOG_VERSION -p:InformationalVersion=$STRUCTLOG_VERSION
+    dotnet pack src/Fable.Logging.Beam -c Release -o ./nupkgs -p:PackageVersion=$BEAM_VERSION -p:InformationalVersion=$BEAM_VERSION
+
+# Pack and push all packages to NuGet (used in CI)
+release: pack
+    dotnet nuget push './nupkgs/*.nupkg' -s https://api.nuget.org/v3/index.json -k $NUGET_KEY
+
+# Run .NET tests
+test:
+    dotnet build test
+    dotnet run --project test
+
+# Format code with Fantomas
+format:
+    dotnet fantomas {{src_path}} -r
+
+# Check code formatting without making changes
+format-check:
+    dotnet fantomas {{src_path}} -r --check
+
+# Install .NET tools (Fable, Fantomas, etc.)
+setup:
+    dotnet tool restore
+
+# Restore all dependencies
+restore:
+    dotnet paket install
+    dotnet restore {{src_path}}/Fable.Logging
+    dotnet restore {{src_path}}/Fable.Logging.Structlog
+    dotnet restore {{src_path}}/Fable.Logging.Beam
+    dotnet restore test
+
+# Run EasyBuild.ShipIt for release management
+shipit *args:
+    dotnet shipit --pre-release rc {{args}}
