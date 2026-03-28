@@ -9,6 +9,7 @@
     <WarnOn>3390;$(WarnOn)</WarnOn>
     <PackageTags>fsharp;fable;fable-beam;erlang;otp;logging</PackageTags>
     <Description>Fable.Logging provider for Erlang/OTP logger on BEAM</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BeamLogger.fs" />
