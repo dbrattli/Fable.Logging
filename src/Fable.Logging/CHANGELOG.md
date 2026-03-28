@@ -1,11 +1,19 @@
 ---
-last_commit_released: 435d19209695cbce5c1ee398c756aeb51c3dc71d
+last_commit_released: d98fc38e403b422163658e68ff8b4520f1c87093
 name: Fable.Logging
 ---
 
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## 0.11.1-rc.1 - 2026-03-28
+
+### 🐞 Bug Fixes
+
+* Add PackageReadmeFile to NuGet packages (#9) ([d98fc38](https://github.com/dbrattli/Fable.Logging/commit/d98fc38e403b422163658e68ff8b4520f1c87093))
+
+<strong><small>[View changes on Github](https://github.com/dbrattli/Fable.Logging/compare/435d19209695cbce5c1ee398c756aeb51c3dc71d..d98fc38e403b422163658e68ff8b4520f1c87093)</small></strong>
 
 ## 0.11.0 - 2026-03-28
 
