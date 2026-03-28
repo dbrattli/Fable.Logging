@@ -49,9 +49,10 @@ jobs:
       - name: Install just
         uses: extractions/setup-just@v3
 
-      - name: Install tools
+      - name: Install tools and restore
         run: |
           dotnet tool restore
+          dotnet paket install
           dotnet restore src/Fable.Logging
           dotnet restore src/Fable.Logging.Structlog
           dotnet restore src/Fable.Logging.Beam
