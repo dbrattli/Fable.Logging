@@ -1,10 +1,18 @@
 ---
-last_commit_released: 36686bf9c6734fd1abf7423b5eef25b83061315e
+last_commit_released: 3bac1dc9fd4d6bb260f6f95f6002b8bb66abf961
 ---
 
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## 0.12.1 - 2026-03-28
+
+### 🐞 Bug Fixes
+
+* Consolidate to single changelog for all packages (#20) ([3bac1dc](https://github.com/dbrattli/Fable.Logging/commit/3bac1dc9fd4d6bb260f6f95f6002b8bb66abf961))
+
+<strong><small>[View changes on Github](https://github.com/dbrattli/Fable.Logging/compare/36686bf9c6734fd1abf7423b5eef25b83061315e..3bac1dc9fd4d6bb260f6f95f6002b8bb66abf961)</small></strong>
 
 ## 0.12.0 - 2026-03-28
 
