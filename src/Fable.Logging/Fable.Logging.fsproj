@@ -9,6 +9,7 @@
     <WarnOn>3390;$(WarnOn)</WarnOn>
     <PackageTags>fsharp;fable;fable-library;fable-javascript;fable-python;fable-beam;logging;ilogger</PackageTags>
     <Description>Cross-platform logging framework for Fable with ILogger, ILoggerFactory, and ILoggerProvider interfaces</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ILogger.fs" />

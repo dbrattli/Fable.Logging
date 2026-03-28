@@ -9,6 +9,7 @@
     <WarnOn>3390;$(WarnOn)</WarnOn>
     <PackageTags>fsharp;fable;fable-library;fable-python;logging;structlog</PackageTags>
     <Description>Fable.Logging provider for Python structlog</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <PropertyGroup>
     <PythonDependencies>
