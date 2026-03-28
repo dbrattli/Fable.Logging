@@ -1,18 +1,30 @@
-
-[tool.poetry]
+[project]
 name = "logger"
 version = "0.1.0"
 description = "Python bindings for StructLog"
-authors = ["Dag Brattli <dag@brattli.net>"]
+authors = [{ name = "Dag Brattli", email = "dag@brattli.net" }]
+requires-python = ">= 3.9, < 4.0"
 license = "MIT"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+    "fable-library>=0.8.0",
+    "structlog>=22.1.0,<26",
+]
 
-[tool.poetry.dependencies]
-python = ">= 3.9, < 4.0"
-fable-library = ">=0.8.0"
-structlog = "^22.1.0"
+[dependency-groups]
+dev = []
 
-[tool.poetry.dev-dependencies]
+[tool.uv]
+package = false
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.10.0,<0.11.0"]
+build-backend = "uv_build"

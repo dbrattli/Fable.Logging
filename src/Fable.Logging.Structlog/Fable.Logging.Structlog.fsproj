@@ -13,7 +13,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <PythonDependencies>
-      <Package Name="structlog" Version="&gt;= 22.1.0 &lt; 23.0.0" ResolutionStrategy="Max" />
+      <Package Name="structlog" Version="&gt;= 22.1.0 &lt; 26.0.0" ResolutionStrategy="Max" />
     </PythonDependencies>
   </PropertyGroup>
   <ItemGroup>
