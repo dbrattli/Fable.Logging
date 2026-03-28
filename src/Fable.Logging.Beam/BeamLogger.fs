@@ -17,15 +17,12 @@ type Logger(name: string) =
                 | LogLevel.Debug -> Logger.logger.debug (message)
                 | LogLevel.Information -> Logger.logger.info (message)
                 | LogLevel.Warning -> Logger.logger.warning (message)
-                | LogLevel.Error ->
-                    match state.Exception with
-                    | Some _ -> Logger.logger.error (message)
-                    | None -> Logger.logger.error (message)
+                | LogLevel.Error -> Logger.logger.error (message)
                 | LogLevel.Critical -> Logger.logger.critical (message)
                 | _ -> Logger.logger.info (message)
 
         member x.IsEnabled(logLevel: LogLevel) = logLevel >= x.MinimumLevel
-        member _.BeginScope(_) = failwith "Not implemented"
+        member _.BeginScope(_) : System.IDisposable = failwith "Not implemented"
 
 type LoggerProvider() =
     interface ILoggerProvider with

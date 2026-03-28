@@ -7,7 +7,7 @@
     <Copyright>Dag Brattli</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <WarnOn>3390;$(WarnOn)</WarnOn>
-    <PackageTags>fsharp;fable;fable-library;logging;ilogger</PackageTags>
+    <PackageTags>fsharp;fable;fable-library;fable-javascript;fable-python;fable-beam;logging;ilogger</PackageTags>
     <Description>Cross-platform logging framework for Fable with ILogger, ILoggerFactory, and ILoggerProvider interfaces</Description>
   </PropertyGroup>
   <ItemGroup>

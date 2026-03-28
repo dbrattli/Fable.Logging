@@ -25,7 +25,7 @@ type MockLogger(name: string) =
         member x.IsEnabled(logLevel: Fable.Logging.LogLevel) =
             logLevel >= x.MinimumLevel
 
-        member _.BeginScope(_) = failwith "Not implemented"
+        member _.BeginScope(_) : System.IDisposable = failwith "Not implemented"
 
 type MockLoggerProvider() =
     let loggers = ResizeArray<MockLogger>()

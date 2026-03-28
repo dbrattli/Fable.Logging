@@ -18,8 +18,9 @@ type internal Logger(name: string, providers: ResizeArray<ILoggerProvider>, mini
                 |> Seq.iter (fun l -> l.Log state)
 
         member x.IsEnabled(logLevel: LogLevel) =
-            loggers
-            |> Seq.exists (fun l -> l.IsEnabled logLevel)
+            logLevel >= minimumLevel
+            && loggers
+               |> Seq.exists (fun l -> l.IsEnabled logLevel)
 
         member _.BeginScope(state: obj) = failwith "Not implemented"
 

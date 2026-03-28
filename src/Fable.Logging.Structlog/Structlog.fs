@@ -86,10 +86,11 @@ type Logger(name: string, processors: Processor list) =
                     | Some ex -> logger.Exception(message, dict [ "args", args ])
                     | None -> logger.Error(message, dict [ "args", args ])
                 | LogLevel.Critical -> logger.Critical(message, dict [ "args", args ])
+                | LogLevel.Trace -> logger.Debug(message, dict [ "args", args ])
                 | _ -> logger.Info(message, dict [ "args", args ])
 
         member x.IsEnabled(logLevel: LogLevel) = logLevel >= x.MinimumLevel
-        member x.BeginScope(var0) = failwith "Not implemented"
+        member x.BeginScope(_) : System.IDisposable = failwith "Not implemented"
 
 
 type ConsoleLogger(name) =
