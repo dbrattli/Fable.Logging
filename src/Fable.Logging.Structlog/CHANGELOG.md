@@ -1,11 +1,19 @@
 ---
-last_commit_released: b21f92dda0fb56533453ff20b28107c61ff05e3f
+last_commit_released: cafb61177ce28c6d14983371d2b73ea92dd97bf8
 name: Fable.Logging.Structlog
 ---
 
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## 0.11.2 - 2026-03-28
+
+### 🐞 Bug Fixes
+
+* Add --skip-duplicate to nuget push and migrate to uv (#18) ([cafb611](https://github.com/dbrattli/Fable.Logging/commit/cafb61177ce28c6d14983371d2b73ea92dd97bf8))
+
+<strong><small>[View changes on Github](https://github.com/dbrattli/Fable.Logging/compare/b21f92dda0fb56533453ff20b28107c61ff05e3f..cafb61177ce28c6d14983371d2b73ea92dd97bf8)</small></strong>
 
 ## 0.11.1 - 2026-03-28
 
