@@ -1,6 +1,5 @@
 ---
-last_commit_released: 219c13d2061fd2f0933a9956d1a91fda14e613a3
-name: Fable.Logging.Beam
+last_commit_released: 36686bf9c6734fd1abf7423b5eef25b83061315e
 ---
 
 # Changelog
@@ -13,15 +12,11 @@ All notable changes to this project will be documented in this file.
 
 * Upgrade Fable.Beam to 5.0.0-rc.19 and sync OTP logger primary level (#15) ([0e4baa5](https://github.com/dbrattli/Fable.Logging/commit/0e4baa549d32b0d16fe47233fed8fdad99127247))
 
-<strong><small>[View changes on Github](https://github.com/dbrattli/Fable.Logging/compare/b21f92dda0fb56533453ff20b28107c61ff05e3f..219c13d2061fd2f0933a9956d1a91fda14e613a3)</small></strong>
-
-## 0.11.1 - 2026-03-28
-
 ### 🐞 Bug Fixes
 
+* Replace Regex/String.Format with simple string ops for BEAM compatibility (#14) ([219c13d](https://github.com/dbrattli/Fable.Logging/commit/219c13d2061fd2f0933a9956d1a91fda14e613a3))
 * Add PackageReadmeFile to NuGet packages (#9) ([d98fc38](https://github.com/dbrattli/Fable.Logging/commit/d98fc38e403b422163658e68ff8b4520f1c87093))
-
-<strong><small>[View changes on Github](https://github.com/dbrattli/Fable.Logging/compare/435d19209695cbce5c1ee398c756aeb51c3dc71d..b21f92dda0fb56533453ff20b28107c61ff05e3f)</small></strong>
+* Add --skip-duplicate to nuget push and migrate to uv (#18) ([cafb611](https://github.com/dbrattli/Fable.Logging/commit/cafb61177ce28c6d14983371d2b73ea92dd97bf8))
 
 ## 0.11.0 - 2026-03-28
 
@@ -32,5 +27,3 @@ All notable changes to this project will be documented in this file.
 ### 🐞 Bug Fixes
 
 * align logging interfaces with .NET abstractions and rewrite README (#3) ([a0394d9](https://github.com/dbrattli/Fable.Logging/commit/a0394d9))
-
-<strong><small>[View changes on Github](https://github.com/dbrattli/Fable.Logging/compare/dee954875171b098225b5970a25134aa74ec73a0..d8b9c80c23d044fffac2adf446469121a2c71f4d)</small></strong>

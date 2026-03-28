@@ -23,17 +23,14 @@ build:
     dotnet build {{src_path}}/Fable.Logging.Beam
     dotnet build test
 
-# Create NuGet packages with versions from changelogs
+# Create NuGet packages with version from root changelog
 pack:
     #!/usr/bin/env bash
     set -euo pipefail
-    get_version() { grep -m1 '^## ' "$1" | sed 's/^## \([^ ]*\).*/\1/'; }
-    LOGGING_VERSION=$(get_version src/Fable.Logging/CHANGELOG.md)
-    STRUCTLOG_VERSION=$(get_version src/Fable.Logging.Structlog/CHANGELOG.md)
-    BEAM_VERSION=$(get_version src/Fable.Logging.Beam/CHANGELOG.md)
-    dotnet pack src/Fable.Logging -c Release -o ./nupkgs -p:PackageVersion=$LOGGING_VERSION -p:InformationalVersion=$LOGGING_VERSION
-    dotnet pack src/Fable.Logging.Structlog -c Release -o ./nupkgs -p:PackageVersion=$STRUCTLOG_VERSION -p:InformationalVersion=$STRUCTLOG_VERSION
-    dotnet pack src/Fable.Logging.Beam -c Release -o ./nupkgs -p:PackageVersion=$BEAM_VERSION -p:InformationalVersion=$BEAM_VERSION
+    VERSION=$(grep -m1 '^## ' CHANGELOG.md | sed 's/^## \([^ ]*\).*/\1/')
+    dotnet pack src/Fable.Logging -c Release -o ./nupkgs -p:PackageVersion=$VERSION -p:InformationalVersion=$VERSION
+    dotnet pack src/Fable.Logging.Structlog -c Release -o ./nupkgs -p:PackageVersion=$VERSION -p:InformationalVersion=$VERSION
+    dotnet pack src/Fable.Logging.Beam -c Release -o ./nupkgs -p:PackageVersion=$VERSION -p:InformationalVersion=$VERSION
 
 # Pack and push all packages to NuGet (used in CI)
 release: pack
