@@ -5,21 +5,10 @@ open System
 type ConsoleLogger(name: string) =
     interface ILogger with
         member this.Log(state: LogState) =
-            let message = state.Format
-            let args = state.Args
-            let error = state.Exception
-            let level = state.Level
+            let message, _ = Common.translateFormat name state.Format state.Args
 
             let message =
-                match args with
-                | null
-                | [||] -> message
-                | _ -> String.Format(message, args)
-
-            let message =
-                let message, _ = Common.translateFormat name message args
-
-                match error with
+                match state.Exception with
                 | Some error ->
                     message
                     + Environment.NewLine
@@ -29,4 +18,4 @@ type ConsoleLogger(name: string) =
             Console.WriteLine(message)
 
         member this.IsEnabled(logLevel: LogLevel) = true
-        member this.BeginScope(var0) = failwith "Not implemented"
+        member this.BeginScope(_) = failwith "Not implemented"

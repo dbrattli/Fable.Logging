@@ -46,11 +46,11 @@ test:
 
 # Format code with Fantomas
 format:
-    dotnet fantomas {{src_path}} -r
+    dotnet fantomas {{src_path}}
 
 # Check code formatting without making changes
 format-check:
-    dotnet fantomas {{src_path}} -r --check
+    dotnet fantomas {{src_path}} --check
 
 # Install .NET tools (Fable, Fantomas, etc.)
 setup:

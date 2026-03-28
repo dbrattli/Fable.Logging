@@ -14,25 +14,22 @@ type LogLevel =
     | Warning = 3
 
 type LogState =
-    {
-        Level: LogLevel
-        Format: string
-        Args: obj array
-        Exception: exn option
-    }
+    { Level: LogLevel
+      Format: string
+      Args: obj array
+      Exception: exn option }
 
-    static member Create(level: LogLevel, format: string, ?parameters: obj array, ?error: exn) = {
-        Level = level
-        Format = format
-        Args = defaultArg parameters [||]
-        Exception = error
-    }
+    static member Create(level: LogLevel, format: string, ?parameters: obj array, ?error: exn) =
+        { Level = level
+          Format = format
+          Args = defaultArg parameters [||]
+          Exception = error }
 
 type ILogger =
     abstract member Log: LogState -> unit
     abstract member IsEnabled: logLevel: LogLevel -> bool
 
-    abstract member BeginScope: obj -> ILogger
+    abstract member BeginScope: obj -> IDisposable
 
 type ILoggerProvider =
     inherit IDisposable
@@ -90,6 +87,11 @@ module Extensions =
         member this.LogInformation(message: string, [<ParamArray>] parameters: obj[]) =
             if this.IsEnabled LogLevel.Information then
                 LogState.Create(LogLevel.Information, message, parameters)
+                |> this.Log
+
+        member this.LogTrace(message: string, [<ParamArray>] parameters: obj[]) =
+            if this.IsEnabled LogLevel.Trace then
+                LogState.Create(LogLevel.Trace, message, parameters)
                 |> this.Log
 
         member this.LogCritical(message: string, [<ParamArray>] parameters: obj[]) =
