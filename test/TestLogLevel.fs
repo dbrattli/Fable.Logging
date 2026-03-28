@@ -14,7 +14,7 @@ let ``test log levels have correct ordering`` () =
 
 [<Fact>]
 let ``test log level filtering with mock logger`` () =
-    let provider = MockLoggerProvider()
+    let provider = new MockLoggerProvider()
 
     let factory =
         LoggerFactory.Create(fun builder ->
@@ -51,4 +51,4 @@ let ``test LogState.Create with parameters`` () =
 let ``test LogState.Create with exception`` () =
     let ex = System.Exception("test error")
     let state = LogState.Create(LogLevel.Error, "failed", error = ex)
-    state.Exception |> equal (Some (ex :> exn))
+    state.Exception |> equal (Some ex)

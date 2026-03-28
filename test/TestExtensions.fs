@@ -5,7 +5,7 @@ open Fable.Logging.Tests.Utils
 
 [<Fact>]
 let ``test LogDebug dispatches with Debug level`` () =
-    let provider = MockLoggerProvider()
+    let provider = new MockLoggerProvider()
 
     let factory =
         LoggerFactory.Create(fun builder ->
@@ -18,7 +18,7 @@ let ``test LogDebug dispatches with Debug level`` () =
 
 [<Fact>]
 let ``test LogInformation dispatches with Information level`` () =
-    let provider = MockLoggerProvider()
+    let provider = new MockLoggerProvider()
     let factory = LoggerFactory.Create(fun builder -> builder.AddProvider(provider))
     let logger = factory.CreateLogger("test")
     logger.LogInformation("info message")
@@ -26,7 +26,7 @@ let ``test LogInformation dispatches with Information level`` () =
 
 [<Fact>]
 let ``test LogWarning dispatches with Warning level`` () =
-    let provider = MockLoggerProvider()
+    let provider = new MockLoggerProvider()
     let factory = LoggerFactory.Create(fun builder -> builder.AddProvider(provider))
     let logger = factory.CreateLogger("test")
     logger.LogWarning("warning message")
@@ -34,7 +34,7 @@ let ``test LogWarning dispatches with Warning level`` () =
 
 [<Fact>]
 let ``test LogError dispatches with Error level`` () =
-    let provider = MockLoggerProvider()
+    let provider = new MockLoggerProvider()
     let factory = LoggerFactory.Create(fun builder -> builder.AddProvider(provider))
     let logger = factory.CreateLogger("test")
     logger.LogError("error message")
@@ -42,26 +42,26 @@ let ``test LogError dispatches with Error level`` () =
 
 [<Fact>]
 let ``test LogCritical dispatches with Critical level`` () =
-    let provider = MockLoggerProvider()
+    let provider = new MockLoggerProvider()
     let factory = LoggerFactory.Create(fun builder -> builder.AddProvider(provider))
     let logger = factory.CreateLogger("test")
-    logger.LogCritical("critical message")
+    logger.LogCritical "critical message"
     provider.Loggers.[0].Logs.[0].Level |> equal LogLevel.Critical
 
 [<Fact>]
 let ``test Log with exception`` () =
-    let provider = MockLoggerProvider()
+    let provider = new MockLoggerProvider()
     let factory = LoggerFactory.Create(fun builder -> builder.AddProvider(provider))
     let logger = factory.CreateLogger("test")
-    let ex = System.Exception("test error")
+    let ex = System.Exception "test error"
     logger.Log(LogLevel.Error, ex, "something failed")
     let log = provider.Loggers.[0].Logs.[0]
     log.Level |> equal LogLevel.Error
-    log.Exception |> equal (Some (ex :> exn))
+    log.Exception |> equal (Some ex)
 
 [<Fact>]
 let ``test extension methods respect IsEnabled`` () =
-    let provider = MockLoggerProvider()
+    let provider = new MockLoggerProvider()
 
     let factory =
         LoggerFactory.Create(fun builder ->
@@ -78,7 +78,7 @@ let ``test extension methods respect IsEnabled`` () =
 
 [<Fact>]
 let ``test LogDebug with format args`` () =
-    let provider = MockLoggerProvider()
+    let provider = new MockLoggerProvider()
     let factory = LoggerFactory.Create(fun builder -> builder.AddProvider(provider))
     let logger = factory.CreateLogger("test")
     logger.LogInformation("hello {name}", box "World")

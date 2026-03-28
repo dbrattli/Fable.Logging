@@ -12,14 +12,14 @@ let ``test LoggerFactory.Create returns factory`` () =
 
 [<Fact>]
 let ``test LoggerFactory with provider`` () =
-    let provider = MockLoggerProvider()
+    let provider = new MockLoggerProvider()
     let factory = LoggerFactory.Create(fun builder -> builder.AddProvider(provider))
     let logger = factory.CreateLogger("MyApp")
     logger.IsEnabled(LogLevel.Information) |> equal true
 
 [<Fact>]
 let ``test LoggerFactory creates logger with correct name`` () =
-    let provider = MockLoggerProvider()
+    let provider =  new MockLoggerProvider()
     let factory = LoggerFactory.Create(fun builder -> builder.AddProvider(provider))
     let _logger = factory.CreateLogger("MyApp.Service")
     provider.Loggers.Length |> equal 1
@@ -27,7 +27,7 @@ let ``test LoggerFactory creates logger with correct name`` () =
 
 [<Fact>]
 let ``test LoggerFactory dispatches to provider`` () =
-    let provider = MockLoggerProvider()
+    let provider = new MockLoggerProvider()
     let factory = LoggerFactory.Create(fun builder -> builder.AddProvider(provider))
     let logger = factory.CreateLogger("test")
     logger.Log(LogLevel.Information, "hello")
@@ -35,8 +35,8 @@ let ``test LoggerFactory dispatches to provider`` () =
 
 [<Fact>]
 let ``test LoggerFactory dispatches to multiple providers`` () =
-    let provider1 = MockLoggerProvider()
-    let provider2 = MockLoggerProvider()
+    let provider1 = new MockLoggerProvider()
+    let provider2 = new MockLoggerProvider()
 
     let factory =
         LoggerFactory.Create(fun builder ->
@@ -50,7 +50,7 @@ let ``test LoggerFactory dispatches to multiple providers`` () =
 
 [<Fact>]
 let ``test LoggerFactory with configure sets minimum level`` () =
-    let provider = MockLoggerProvider()
+    let provider = new MockLoggerProvider()
 
     let factory =
         LoggerFactory.Create(fun builder ->
@@ -65,14 +65,14 @@ let ``test LoggerFactory with configure sets minimum level`` () =
 
 [<Fact>]
 let ``test LoggerFactory.Create empty constructor`` () =
-    use factory = LoggerFactory() :> ILoggerFactory
+    use factory = new LoggerFactory() :> ILoggerFactory
     let logger = factory.CreateLogger("test")
     // No providers => not enabled
     logger.IsEnabled(LogLevel.Information) |> equal false
 
 [<Fact>]
 let ``test LoggerFactory AddProvider after CreateLogger`` () =
-    let provider = MockLoggerProvider()
+    let provider = new MockLoggerProvider()
     let factory = LoggerFactory.Create()
     let logger = factory.CreateLogger("test")
     // Initially no providers
@@ -85,7 +85,7 @@ let ``test LoggerFactory AddProvider after CreateLogger`` () =
 
 [<Fact>]
 let ``test LoggerFactory ClearProviders`` () =
-    let provider = MockLoggerProvider()
+    let provider = new MockLoggerProvider()
 
     let factory =
         LoggerFactory.Create(fun builder ->
@@ -97,7 +97,7 @@ let ``test LoggerFactory ClearProviders`` () =
 
 [<Fact>]
 let ``test LoggerFactory Dispose clears providers`` () =
-    let provider = MockLoggerProvider()
+    let provider = new MockLoggerProvider()
     let factory = LoggerFactory.Create(fun builder -> builder.AddProvider(provider))
     let _logger = factory.CreateLogger("test")
     (factory :> System.IDisposable).Dispose()
