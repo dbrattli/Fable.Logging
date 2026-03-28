@@ -1,37 +1,62 @@
+name: Publish NuGet
+
 on:
   push:
-    tags:
-      - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
+    branches: [main]
 
-name: Publish Release
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
-  build:
-    name: Create Release
+  shipit-pr:
+    name: ShipIt - Pull Request
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: Checkout code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 6.0.401
+          dotnet-version: 10.x
 
-      - name: Setup tools
+      - name: Install tools
         run: dotnet tool restore
-      - name: Dotnet Pack
-        run: dotnet pack -c Release -p:PackageVersion=${GITHUB_REF##*/v} -p:FileVersion=${GITHUB_REF##*/v} -p:InformationalVersion=${GITHUB_REF##*/v} src
 
-      - name: Push Nuget
-        run: dotnet nuget push src/bin/Release/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }}
-        continue-on-error: false
-
-      - name: Create Release
-        uses: actions/create-release@master
+      - name: ShipIt (Pull Request)
+        run: dotnet shipit --pre-release rc
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: "startsWith(github.event.head_commit.message, 'chore: release ')"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v5
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
+          dotnet-version: 10.x
+
+      - name: Install just
+        uses: extractions/setup-just@v3
+
+      - name: Install tools
+        run: |
+          dotnet tool restore
+          dotnet restore src/Fable.Logging
+          dotnet restore src/Fable.Logging.Structlog
+          dotnet restore src/Fable.Logging.Beam
+
+      - name: Build, pack and push
+        run: just release
+        env:
+          NUGET_KEY: ${{ secrets.NUGET_API_KEY }}

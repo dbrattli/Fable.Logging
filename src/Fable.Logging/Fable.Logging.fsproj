@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Author>Dag Brattli</Author>
+    <Copyright>Dag Brattli</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <WarnOn>3390;$(WarnOn)</WarnOn>
+    <PackageTags>fsharp;fable;fable-library;logging;ilogger</PackageTags>
+    <Description>Cross-platform logging framework for Fable with ILogger, ILoggerFactory, and ILoggerProvider interfaces</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="ILogger.fs" />
+    <Compile Include="Common.fs" />
+    <Compile Include="LoggerFactory.fs" />
+    <Compile Include="ConsoleLogger.fs" />
+    <Compile Include="JSLogger.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="*.fsproj; **\*.fs; **\*.fsi" PackagePath="fable\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\LICENSE" Pack="true" Visible="false" PackagePath="\" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+</Project>
