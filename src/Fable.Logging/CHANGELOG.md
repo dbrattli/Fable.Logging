@@ -1,11 +1,19 @@
 ---
-last_commit_released: b21f92dda0fb56533453ff20b28107c61ff05e3f
+last_commit_released: 219c13d2061fd2f0933a9956d1a91fda14e613a3
 name: Fable.Logging
 ---
 
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## 0.11.2 - 2026-03-28
+
+### 🐞 Bug Fixes
+
+* Replace Regex/String.Format with simple string ops for BEAM compatibility (#14) ([219c13d](https://github.com/dbrattli/Fable.Logging/commit/219c13d2061fd2f0933a9956d1a91fda14e613a3))
+
+<strong><small>[View changes on Github](https://github.com/dbrattli/Fable.Logging/compare/b21f92dda0fb56533453ff20b28107c61ff05e3f..219c13d2061fd2f0933a9956d1a91fda14e613a3)</small></strong>
 
 ## 0.11.1 - 2026-03-28
 

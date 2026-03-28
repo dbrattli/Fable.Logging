@@ -1,11 +1,19 @@
 ---
-last_commit_released: b21f92dda0fb56533453ff20b28107c61ff05e3f
+last_commit_released: 219c13d2061fd2f0933a9956d1a91fda14e613a3
 name: Fable.Logging.Beam
 ---
 
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## 0.12.0 - 2026-03-28
+
+### 🚀 Features
+
+* Upgrade Fable.Beam to 5.0.0-rc.19 and sync OTP logger primary level (#15) ([0e4baa5](https://github.com/dbrattli/Fable.Logging/commit/0e4baa549d32b0d16fe47233fed8fdad99127247))
+
+<strong><small>[View changes on Github](https://github.com/dbrattli/Fable.Logging/compare/b21f92dda0fb56533453ff20b28107c61ff05e3f..219c13d2061fd2f0933a9956d1a91fda14e613a3)</small></strong>
 
 ## 0.11.1 - 2026-03-28
 
