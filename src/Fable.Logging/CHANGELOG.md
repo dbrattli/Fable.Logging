@@ -1,5 +1,5 @@
 ---
-last_commit_released: d8b9c80c23d044fffac2adf446469121a2c71f4d
+last_commit_released: 435d19209695cbce5c1ee398c756aeb51c3dc71d
 name: Fable.Logging
 ---
 
