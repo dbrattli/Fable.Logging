@@ -1,7 +1,6 @@
 module Fable.Logging.Beam
 
 open Fable.Beam
-open Fable.Beam.Erlang
 
 let private toErlangLevel (level: LogLevel) =
     match level with
@@ -25,12 +24,12 @@ type Logger(name: string) =
                 let message, _ = Common.translateFormat name state.Format state.Args
 
                 match level with
-                | LogLevel.Debug -> Logger.logger.debug (message)
-                | LogLevel.Information -> Logger.logger.info (message)
-                | LogLevel.Warning -> Logger.logger.warning (message)
-                | LogLevel.Error -> Logger.logger.error (message)
-                | LogLevel.Critical -> Logger.logger.critical (message)
-                | _ -> Logger.logger.info (message)
+                | LogLevel.Debug -> Fable.Beam.Logger.logger.debug (message)
+                | LogLevel.Information -> Fable.Beam.Logger.logger.info (message)
+                | LogLevel.Warning -> Fable.Beam.Logger.logger.warning (message)
+                | LogLevel.Error -> Fable.Beam.Logger.logger.error (message)
+                | LogLevel.Critical -> Fable.Beam.Logger.logger.critical (message)
+                | _ -> Fable.Beam.Logger.logger.info (message)
 
         member x.IsEnabled(logLevel: LogLevel) = logLevel >= x.MinimumLevel
         member _.BeginScope(_) : System.IDisposable = failwith "Not implemented"
@@ -38,7 +37,7 @@ type Logger(name: string) =
 type LoggerProvider(?minimumLevel: LogLevel) =
     let level = defaultArg minimumLevel LogLevel.Trace
 
-    do Logger.logger.set_primary_config (Atom "level", toErlangLevel level)
+    do Fable.Beam.Logger.logger.set_primary_config (Atom "level", toErlangLevel level)
 
     interface ILoggerProvider with
         member _.CreateLogger(name) =
