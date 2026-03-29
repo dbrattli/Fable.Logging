@@ -1,10 +1,18 @@
 ---
-last_commit_released: 1c1b1e579131775a31716ad30273dc2113989b7d
+last_commit_released: 36516189bb314ded985181c7f954ec4b3219900c
 ---
 
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## 0.12.3 - 2026-03-29
+
+### 🐞 Bug Fixes
+
+* Use Atom key in set_primary_config for Fable.Beam rc.20 compat (#24) ([3651618](https://github.com/dbrattli/Fable.Logging/commit/36516189bb314ded985181c7f954ec4b3219900c))
+
+<strong><small>[View changes on Github](https://github.com/dbrattli/Fable.Logging/compare/1c1b1e579131775a31716ad30273dc2113989b7d..36516189bb314ded985181c7f954ec4b3219900c)</small></strong>
 
 ## 0.12.2 - 2026-03-29
 
