@@ -1,10 +1,18 @@
 ---
-last_commit_released: 36516189bb314ded985181c7f954ec4b3219900c
+last_commit_released: a39accdd5ec96a5e2d3117d1dd0e2eef4fd1d252
 ---
 
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## 0.12.4 - 2026-03-29
+
+### 🐞 Bug Fixes
+
+* Upgrade Fable.Beam to 5.0.0-rc.22 and qualify Logger module (#26) ([a39accd](https://github.com/dbrattli/Fable.Logging/commit/a39accdd5ec96a5e2d3117d1dd0e2eef4fd1d252))
+
+<strong><small>[View changes on Github](https://github.com/dbrattli/Fable.Logging/compare/36516189bb314ded985181c7f954ec4b3219900c..a39accdd5ec96a5e2d3117d1dd0e2eef4fd1d252)</small></strong>
 
 ## 0.12.3 - 2026-03-29
 
