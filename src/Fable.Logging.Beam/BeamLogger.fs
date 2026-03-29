@@ -38,7 +38,7 @@ type Logger(name: string) =
 type LoggerProvider(?minimumLevel: LogLevel) =
     let level = defaultArg minimumLevel LogLevel.Trace
 
-    do Logger.logger.set_primary_config ("level", toErlangLevel level)
+    do Logger.logger.set_primary_config (Atom "level", toErlangLevel level)
 
     interface ILoggerProvider with
         member _.CreateLogger(name) =
