@@ -1,5 +1,6 @@
 ---
 last_commit_released: a39accdd5ec96a5e2d3117d1dd0e2eef4fd1d252
+name: Fable.Logging
 ---
 
 # Changelog
